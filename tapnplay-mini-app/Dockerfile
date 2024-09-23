@@ -21,7 +21,9 @@ FROM nginx:stable-alpine
 
 # Копируем скомпилированные файлы в nginx
 COPY --from=build /app/dist /usr/share/nginx/html
-COPY --from=build nginx.conf /etc/nginx/conf.d/default.conf
+
+# Копируем nginx.conf из локальной директории в контейнер
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Указываем порт
 EXPOSE 3000
