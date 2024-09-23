@@ -1,8 +1,10 @@
+version: '3.8'  # Добавьте версию
+
 networks:
   dev:
 
 services:
- nginx:
+  nginx:
     image: nginx:stable-alpine
     ports:
       - "80:80"
@@ -25,4 +27,3 @@ services:
       context: ./tapnplay-mini-app
     networks:
       - dev
-      
