@@ -4,6 +4,8 @@
       <router-link to="/">Кликать монеты</router-link>
       |
       <router-link to="/shop">Магазин</router-link>
+      |
+      <router-link to="/profile">Профиль</router-link>
       <button @click="toggleTheme">Сменить тему</button>
     </nav>
     <router-view />

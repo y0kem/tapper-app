@@ -1,0 +1,28 @@
+networks:
+  dev:
+
+services:
+ nginx:
+    image: nginx:stable-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - './nginx.conf:/etc/nginx/nginx.conf'
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - dev
+
+  backend:
+    build:
+      context: ./tapnplay-mini-app-backend
+    networks:
+      - dev
+
+  frontend:
+    build:
+      context: ./tapnplay-mini-app
+    networks:
+      - dev
+      
