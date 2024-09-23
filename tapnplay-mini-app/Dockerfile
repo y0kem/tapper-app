@@ -1,19 +1,30 @@
 # Указываем базовый образ
 FROM node:alpine as build
 
-COPY package.json package.json 
+# Устанавливаем рабочую директорию
+WORKDIR /app
+
+# Копируем package.json
+COPY package.json ./
 
 # Устанавливаем зависимости
 RUN npm install
 
 # Копируем все остальные файлы
 COPY . .
-RUN npm build
 
-FROM nginx: stable-alpine
+# Собираем проект
+RUN npm run build
 
-COPY --from=build /dist /usr/share/nginx/html
+# Используем nginx для обслуживания статических файлов
+FROM nginx:stable-alpine
+
+# Копируем скомпилированные файлы в nginx
+COPY --from=build /app/dist /usr/share/nginx/html
 COPY --from=build nginx.conf /etc/nginx/conf.d/default.conf
 
+# Указываем порт
 EXPOSE 3000
+
+# Запускаем nginx
 CMD [ "nginx", "-g", "daemon off;" ]
